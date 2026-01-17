@@ -14,7 +14,7 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_PASSWORD: password
+          POSTGRES_PASSWORD: 12345678
           POSTGRES_DB: medical_warehouse
         ports:
           - 5432:5432
@@ -27,7 +27,7 @@ jobs:
     env:
       DB_HOST: localhost  # Now 'localhost' works because the DB is in the runner!
       DB_USER: postgres
-      DB_PASS: password
+      DB_PASS: 12345678
       DB_NAME: medical_warehouse
 
     steps:
