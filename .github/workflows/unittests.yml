@@ -55,7 +55,7 @@ jobs:
         run: |
           # Create the schema and required tables
           PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE SCHEMA IF NOT EXISTS raw;"
-          PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE TABLE IF NOT EXISTS raw.telegram_messages (message_id integer primary key, channel_name text, message_date timestamp);"
+          PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE TABLE IF NOT EXISTS raw.telegram_messages (message_id integer primary key, channel_name text,message_text text, message_date timestamp);"
           PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE TABLE IF NOT EXISTS raw.yolo_detections (message_id integer primary key);"
 
           dbt deps --project-dir medical_warehouse
