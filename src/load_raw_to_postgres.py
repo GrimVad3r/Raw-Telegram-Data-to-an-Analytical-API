@@ -23,7 +23,7 @@ class RawDataLoader:
         self.cur.execute("""
             CREATE SCHEMA IF NOT EXISTS raw;
             
-            DROP TABLE IF EXISTS raw.telegram_messages;
+            DROP TABLE IF EXISTS raw.telegram_messages CASCADE;
             
             CREATE TABLE raw.telegram_messages (
                 message_id BIGINT,
