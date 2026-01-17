@@ -14,7 +14,7 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASS }}
+          POSTGRES_PASSWORD: password
           POSTGRES_DB: medical_warehouse
         ports:
           - 5432:5432
@@ -27,7 +27,7 @@ jobs:
     env:
       DB_HOST: localhost  # Now 'localhost' works because the DB is in the runner!
       DB_USER: postgres
-      DB_PASS: ${{ secrets.DB_PASS }}
+      DB_PASS: password
       DB_NAME: medical_warehouse
 
     steps:
@@ -50,6 +50,14 @@ jobs:
 
       - name: Validate dbt connection
         run: dbt debug --project-dir medical_warehouse --profiles-dir medical_warehouse
+
+      - name: Setup Raw Schema and dbt Build
+        run: |
+          # Create the schema that dbt sources expect
+          PGPASSWORD=password psql -h localhost -U postgres -d medical_warehouse -c "CREATE SCHEMA IF NOT EXISTS raw;"
+          
+          dbt deps --project-dir medical_warehouse
+          dbt build --project-dir medical_warehouse --profiles-dir medical_warehouse
 
       - name: Run dbt Tests
         run: dbt test --project-dir medical_warehouse --profiles-dir medical_warehouse
