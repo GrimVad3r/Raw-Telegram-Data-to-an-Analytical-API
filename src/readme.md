@@ -98,3 +98,96 @@ Each channel generates a JSON file structured as follows:
 * **Compliance:** Ensure you have permission to scrape the targeted channels and comply with Telegram's Terms of Service.
 
 ---
+
+---
+
+# Telegram Data Warehouse Loader
+
+This script serves as the **Ingestion Layer** of your data pipeline. It is responsible for moving raw JSON data from your local Data Lake into a structured **PostgreSQL** database. It automates schema creation and handles the bulk loading of scraped Telegram messages.
+
+## 🏛️ Architecture Overview
+
+The script follows the "E" and "L" of an ETL (Extract, Transform, Load) process:
+
+1. **Extract**: Scans the `data/raw/telegram_messages` directory recursively for `.json` files.
+2. **Load**: Parses JSON objects and inserts them into a relational PostgreSQL schema.
+
+---
+
+## 🚀 Features
+
+* **Automated Schema Management**: Automatically creates the `raw` schema and the `telegram_messages` table if they do not exist.
+* **Recursive File Discovery**: Uses `pathlib` to find all JSON files across nested daily folders.
+* **Relational Mapping**: Maps unstructured JSON fields to specific PostgreSQL data types (BIGINT, TIMESTAMP, TEXT, etc.).
+* **Traceability**: Adds a `loaded_at` timestamp to every row to track when the data entered the warehouse.
+
+---
+
+## 🛠️ Requirements
+
+* **Python 3.x**
+* **PostgreSQL** instance
+* **Dependencies**:
+```bash
+pip install psycopg2-binary python-dotenv
+
+```
+
+
+
+---
+
+## ⚙️ Configuration
+
+The loader uses the same `.env` file as your scraper. Ensure the following variables are defined:
+
+```env
+DB_HOST=your_database_host (e.g., localhost)
+DB_NAME=medical_warehouse
+DB_USER=your_username
+DB_PASS=your_password
+
+```
+
+---
+
+## 📊 Database Schema (`raw.telegram_messages`)
+
+| Column | Data Type | Description |
+| --- | --- | --- |
+| `message_id` | BIGINT | Unique Telegram message ID |
+| `channel_name` | VARCHAR | Sanitized name of the source channel |
+| `message_date` | TIMESTAMP | Original publication time |
+| `message_text` | TEXT | Content of the message |
+| `has_media` | BOOLEAN | Flag for image/video presence |
+| `image_path` | TEXT | Local file path to the downloaded image |
+| `views` | INTEGER | View count at time of scrape |
+| `forwards` | INTEGER | Forward count at time of scrape |
+| `loaded_at` | TIMESTAMP | Metadata: When this row was inserted |
+
+---
+
+## 📝 Usage
+
+Run the script from your project root:
+
+```bash
+python src/database_loader.py
+
+```
+
+### What happens during execution:
+
+1. The script connects to your PostgreSQL instance.
+2. It creates a `raw` schema to isolate "dirty" data from your analytical tables.
+3. It wipes the existing `raw.telegram_messages` table (Full Refresh mode).
+4. It iterates through every JSON file found in your data lake and commits the records to the database.
+
+---
+
+## ⚠️ Important Considerations
+
+* **Full Refresh**: The current version uses `DROP TABLE IF EXISTS`. This is ideal for initial development but should be changed to an `UPSERT` (Insert on Conflict) pattern if you want to avoid duplicating or losing historical data in production.
+* **Error Handling**: If one JSON file is corrupted, the current script will log the error but stop. Adding a `try/except` block inside the file loop is recommended for large-scale production runs.
+
+---
