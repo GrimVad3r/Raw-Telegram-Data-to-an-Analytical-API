@@ -6,17 +6,17 @@ models:
     columns:
       - name: channel_key
         description: "Surrogate key for channel"
-        tests:
+        data_tests:
           - unique
           - not_null
       - name: channel_name
         description: "Name of the channel"
-        tests:
+        data_tests:
           - unique
           - not_null
       - name: total_posts
         description: "Total number of posts in channel"
-        tests:
+        data_tests:
           - not_null
 
   - name: dim_dates
@@ -24,31 +24,33 @@ models:
     columns:
       - name: date_key
         description: "Surrogate key for date"
-        tests:
+        data_tests:
           - unique
           - not_null
       - name: full_date
-        tests:
+        data_tests:
           - not_null
 
   - name: fct_messages
     description: "Fact table for messages"
     columns:
       - name: message_id
-        tests:
+        data_tests:
           - unique
           - not_null
       - name: channel_key
-        tests:
+        data_tests:
+          - not_null
           - relationships:
-              arugments:
-              to: ref('dim_channels')
-              field: channel_key
+              arguments:
+                to: ref('dim_channels')
+                field: channel_key
       - name: date_key
-        tests:
+        data_tests:
           - relationships:
-              to: ref('dim_dates')
-              field: date_key
+              arguments:
+                to: ref('dim_dates')
+                field: date_key
       - name: view_count
-        tests:
+        data_tests:
           - not_null
