@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: telegram_messages
+        description: "Raw Telegram messages scraped from channels"
+        columns:
+          - name: message_id
+            description: "Unique message identifier"
+            tests:
+              - not_null
+          - name: channel_name
+            description: "Name of the Telegram channel"
+          - name: message_date
+            description: "Timestamp when message was posted"
