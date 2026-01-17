@@ -1,3 +1,6 @@
 .env
 data/
+logs/
 corporate_proxy_session.session
+proxy_scrapping_session.session
+logs/scraper.log

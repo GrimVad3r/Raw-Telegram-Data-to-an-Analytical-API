@@ -34,12 +34,13 @@ class TelegramScraper:
             raise ValueError("API_ID or API_HASH not found in .env file.")
 
         # Verified MTProto Proxy Settings
-        proxy_addr = '193.17.95.241' 
-        proxy_port = 8443
-        proxy_secret = 'EERighJJvXrFGRMCIMJdCQEERighJJvXrFGRMCIMJdCQEERighJJvXrFGRMCIMJdCQEERighJJvXrFGRMCIMJdCQEERighJJvXrFGRMCIMJdCQEERighJJvXrFGRMCIMJdCQEERighJJvXrFGRMCIMJdCQEERighJJvXrFGRMCIMJdCQEERighJJvXrFGRMCIMJdCQEERighJJvXrFGRMCIMJdCQ=='
+        proxy_addr = os.getenv("proxy_addr")
+        proxy_port_str = os.getenv("proxy_port")
+        proxy_port = int(proxy_port_str) if proxy_port_str else None
+        proxy_secret = os.getenv("proxy_secret")
 
         self.client = TelegramClient(
-            "corporate_proxy_session",
+            "proxy_scrapping_session",
             self.api_id,
             self.api_hash,
             connection=connection.ConnectionTcpMTProxyRandomizedIntermediate,
@@ -68,12 +69,14 @@ class TelegramScraper:
         try:
             async for message in self.client.iter_messages(channel_username, limit=limit):
                 message_dict = {
-                    "message_id": message.id,
-                    "channel_name": channel_name,
-                    "message_date": message.date.isoformat() if message.date else None,
-                    "message_text": message.message if message.message else "",
-                    "has_media": message.media is not None,
-                    "image_path": None,
+                    'message_id': message.id,
+                    'channel_name': channel_name,
+                    'message_date': message.date.isoformat(),
+                    'message_text': message.message if message.message else '',
+                    'has_media': message.media is not None,
+                    'image_path': None,
+                    'views': message.views if message.views else 0,
+                    'forwards': message.forwards if message.forwards else 0
                 }
                 
                 if message.media and isinstance(message.media, MessageMediaPhoto):

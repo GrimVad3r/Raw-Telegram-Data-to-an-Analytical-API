@@ -280,3 +280,239 @@
 2026-01-17 11:11:52,213 - INFO - Saved 100 messages for tikvahpharma.
 2026-01-17 11:11:52,213 - INFO - Disconnecting from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
 2026-01-17 11:11:52,213 - INFO - Disconnection from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:28:02,197 - INFO - Starting Telegram Client...
+2026-01-17 11:28:02,210 - INFO - Connecting to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:30:49,596 - INFO - Connection to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:32:41,575 - INFO - Disconnecting from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:32:41,577 - INFO - Disconnection from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:32:51,637 - INFO - Starting Telegram Client...
+2026-01-17 11:32:51,637 - INFO - Connecting to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:32:53,946 - INFO - Connection to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:32:53,970 - ERROR - Request caused struct.error: required argument is not an integer: InvokeWithLayerRequest(layer=216, query=InitConnectionRequest(api_id=26042740, device_model='PC 64bit', system_version='10', app_version='1.42.0', system_lang_code='en', lang_pack='', lang_code='en', query=GetConfigRequest(), proxy=InputClientProxy(address='193.17.95.241', port='8443'), params=None))
+2026-01-17 11:32:53,971 - ERROR - Scraper failed: required argument is not an integer
+2026-01-17 11:32:53,971 - INFO - Disconnecting from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:32:53,973 - INFO - Disconnection from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:33:17,598 - INFO - Starting Telegram Client...
+2026-01-17 11:33:17,613 - INFO - Connecting to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:33:21,652 - INFO - Connection to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:33:21,674 - ERROR - Request caused struct.error: required argument is not an integer: InvokeWithLayerRequest(layer=216, query=InitConnectionRequest(api_id=26042740, device_model='PC 64bit', system_version='10', app_version='1.42.0', system_lang_code='en', lang_pack='', lang_code='en', query=GetConfigRequest(), proxy=InputClientProxy(address='193.17.95.241', port='8443'), params=None))
+2026-01-17 11:33:21,676 - ERROR - Scraper failed: required argument is not an integer
+2026-01-17 11:33:21,676 - INFO - Disconnecting from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:33:21,676 - INFO - Disconnection from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:36:21,618 - INFO - Starting Telegram Client...
+2026-01-17 11:36:21,626 - INFO - Connecting to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:36:23,775 - INFO - Connection to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:36:24,796 - INFO - Phone migrated to 4
+2026-01-17 11:36:24,944 - INFO - Reconnecting to new data center 4
+2026-01-17 11:36:25,129 - INFO - Disconnecting from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:36:25,129 - INFO - Disconnection from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:36:25,129 - INFO - Connecting to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:36:29,107 - INFO - Connection to 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!
+2026-01-17 11:37:11,565 - INFO - Connection established!
+2026-01-17 11:37:13,574 - INFO - Scraping channel: https://t.me/CheMed123
+2026-01-17 11:37:14,767 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:17,273 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:20,604 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:22,428 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:24,123 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:26,381 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:28,945 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:30,588 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:34,452 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:37,158 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:39,263 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:41,864 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:43,701 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:45,767 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:48,898 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:50,835 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:54,021 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:56,760 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:37:59,510 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:01,592 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:03,932 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:05,794 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:08,063 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:10,517 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:13,449 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:16,781 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:18,570 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:20,382 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:21,180 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:24,378 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:26,592 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:28,536 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:30,026 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:31,357 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:32,764 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:36,029 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:37,813 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:39,838 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:41,268 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:43,262 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:45,527 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:46,948 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:48,362 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:49,794 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:51,302 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:53,453 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:55,415 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:57,250 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:38:58,378 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:00,620 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:01,733 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:04,905 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:06,217 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:07,767 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:08,790 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:10,200 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:13,083 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:16,250 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:17,928 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:19,496 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:20,880 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:22,869 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:26,178 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:27,978 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:30,963 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:32,135 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:32,959 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:33,938 - INFO - Saved 76 messages for CheMed123.
+2026-01-17 11:39:35,943 - INFO - Scraping channel: https://t.me/lobelia4cosmetics
+2026-01-17 11:39:36,797 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:37,948 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:38,886 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:40,923 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:42,626 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:43,921 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:44,494 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:46,068 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:47,487 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:48,708 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:49,510 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:52,071 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:53,931 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:56,190 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:56,916 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:57,509 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:39:58,726 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:00,338 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:01,698 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:04,419 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:05,065 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:06,983 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:09,221 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:12,620 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:14,861 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:15,597 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:17,070 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:18,107 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:19,501 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:21,421 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:22,967 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:25,041 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:25,423 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:25,804 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:26,329 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:28,794 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:30,589 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:32,061 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:35,013 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:37,492 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:39,341 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:39,938 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:42,073 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:43,607 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:44,613 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:45,870 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:47,565 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:49,307 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:51,698 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:53,039 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:56,345 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:57,907 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:40:59,677 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:02,784 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:04,175 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:05,974 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:07,216 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:08,625 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:10,907 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:11,527 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:12,506 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:15,789 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:17,299 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:19,108 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:20,954 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:22,330 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:23,473 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:25,075 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:25,823 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:26,262 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:28,915 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:31,572 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:32,337 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:33,727 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:37,486 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:38,538 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:39,871 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:40,598 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:41,926 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:42,680 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:44,234 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:45,187 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:48,176 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:49,675 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:51,480 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:53,122 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:55,199 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:57,838 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:58,180 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:59,254 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:41:59,831 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:00,367 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:01,885 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:03,290 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:04,390 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:06,002 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:08,430 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:10,751 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:12,502 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:14,280 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:15,850 - INFO - Saved 100 messages for lobelia4cosmetics.
+2026-01-17 11:42:17,853 - INFO - Scraping channel: https://t.me/tikvahpharma
+2026-01-17 11:42:19,757 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:23,886 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:25,672 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:26,730 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:28,274 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:29,315 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:30,828 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:32,238 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:35,974 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:39,540 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:40,571 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:43,270 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:44,307 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:46,017 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:49,438 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:52,579 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:55,481 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:42:57,519 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:00,868 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:01,538 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:04,221 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:06,847 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:08,780 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:11,913 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:15,320 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:16,511 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:18,216 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:19,205 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:28,828 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:31,065 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:33,857 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:34,520 - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2026-01-17 11:43:37,376 - INFO - Saved 100 messages for tikvahpharma.
+2026-01-17 11:43:37,376 - INFO - Disconnecting from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate...
+2026-01-17 11:43:37,389 - INFO - Disconnection from 193.17.95.241:8443/TcpMTProxyRandomizedIntermediate complete!

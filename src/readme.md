@@ -50,6 +50,9 @@ Create a `.env` file in the root directory:
 API_ID=your_api_id
 API_HASH=your_api_hash
 PHONE=+your_phone_number
+proxy_addr = proxy_address ( Data from Mtpro.xyz)
+proxy_port = proxy_port ( Data from Mtpro.xyz)
+proxy_secret = proxy_secret ( Data from Mtpro.xyz)
 
 ```
 
@@ -59,7 +62,7 @@ PHONE=+your_phone_number
 
 In a standard environment, Telegram's MTProto traffic is often flagged by corporate firewalls. This script utilizes a **Randomized Intermediate MTProto Proxy** to mask traffic:
 
-If the current proxy (`193.17.95.241`) becomes slow, you can find fresh proxies from [MTPro.xyz](https://mtpro.xyz) and update the `proxy_addr`, `proxy_port`, and `proxy_secret` in the `__init__` method.
+If the current proxy (`193.17.95.241`) becomes slow, you can find fresh proxies from [MTPro.xyz](https://mtpro.xyz) and update the `proxy_addr`, `proxy_port`, and `proxy_secret` in the env file.
 
 ## 📝 Usage
 
