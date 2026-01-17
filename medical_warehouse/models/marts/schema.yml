@@ -54,3 +54,21 @@ models:
       - name: view_count
         data_tests:
           - not_null
+  - name: stg_telegram_messages
+    columns:
+      - name: message_id
+        data_tests:
+          - unique
+          - not_null
+      - name: channel_name
+        data_tests:
+          - not_null
+      - name: message_date
+        data_tests:
+          - not_null
+      - name: views
+        data_tests:
+          - not_null
+          # Built-in test: Ensures views are never negative (similar to your custom test)
+          - dbt_utils.accepted_range:
+              min_value: 0
