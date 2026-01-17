@@ -9,9 +9,18 @@ sources:
         columns:
           - name: message_id
             description: "Unique message identifier"
-            tests:
+            data_tests:  # Updated to modern syntax
               - not_null
           - name: channel_name
             description: "Name of the Telegram channel"
           - name: message_date
             description: "Timestamp when message was posted"
+
+      # --- ADD THE SECTION BELOW ---
+      - name: yolo_detections
+        description: "Raw detection data from the YOLO object detection model"
+        columns:
+          - name: message_id
+            description: "Foreign key linking to telegram_messages"
+            data_tests:
+              - not_null
