@@ -191,3 +191,92 @@ python src/database_loader.py
 * **Error Handling**: If one JSON file is corrupted, the current script will log the error but stop. Adding a `try/except` block inside the file loop is recommended for large-scale production runs.
 
 ---
+
+---
+
+# Telegram Image Intelligence Pipeline (YOLOv8)
+
+This segment of the project adds a layer of **Computer Vision** to the data pipeline. It automatically analyzes images downloaded from Telegram channels, detects objects, categorizes the content type, and stores these analytical insights into the PostgreSQL warehouse.
+
+## 🧠 Overview
+
+The pipeline consists of two primary scripts:
+
+1. **Object Detection & Categorization (`ImageDetector`):** Uses the YOLOv8 (You Only Look Once) model to scan images for specific objects (people, bottles, medical containers).
+2. **Database Ingestion (`load_yolo_results`):** Takes the resulting metadata and loads it into a specialized schema in PostgreSQL for downstream analytical joining.
+
+---
+
+## 🚀 Script 1: Image Processing (`detector.py`)
+
+This script performs the heavy lifting of visual analysis.
+
+### Features
+
+* **Object Detection:** Identifies multiple objects in a single frame using the `ultralytics` YOLO engine.
+* **Smart Categorization:** Implements custom logic to classify images based on detected content:
+* **Promotional:** Images containing both a *person* and a *product* (e.g., an ad).
+* **Product Display:** Images with *products* but no *people* (e.g., catalog shots).
+* **Lifestyle:** Images with *people* but no *products* (e.g., general medical staff photos).
+* **Other:** Default category for unidentified or miscellaneous scenes.
+
+
+* **Confidence Scoring:** Records the model's certainty (0.0 - 1.0) for every detection.
+
+### Directory Structure
+
+It scans the data lake recursively:
+`data/raw/images/{channel_name}/{message_id}.jpg`  `data/processed/yolo_detections.csv`
+
+---
+
+## 🚀 Script 2: PostgreSQL Loader (`load_yolo_to_postgres.py`)
+
+This script bridges the gap between the processed CSV and your relational database.
+
+### Features
+
+* **Schema Isolation:** Creates the `raw.yolo_detections` table within the `raw` schema.
+* **Metadata Integration:** Stores `message_id` and `channel_name`, allowing you to **JOIN** visual data with the text data in your dbt models.
+* **Full Detection Logging:** Stores a string representation of *all* objects found in an image for deeper future analysis.
+
+---
+
+## 🛠️ Setup & Installation
+
+### 1. Requirements
+
+Install the computer vision and database dependencies:
+
+```bash
+pip install ultralytics opencv-python pandas psycopg2-binary
+
+```
+
+### 2. Run the Pipeline
+
+First, analyze the images:
+
+```bash
+python src/detector.py
+
+```
+
+Then, push the results to the database:
+
+```bash
+python src/load_yolo_to_postgres.py
+
+```
+
+---
+
+## 📊 Analytical Potential
+
+By loading this data into PostgreSQL, you can now answer complex business questions via SQL or dbt:
+
+* *"What percentage of messages in the 'CheMed' channel are promotional ads vs. text-only?"*
+* *"Do promotional images get more 'Views' on average than lifestyle images?"*
+* *"Which medical brands are appearing most frequently in 'Product Display' photos?"*
+
+---
