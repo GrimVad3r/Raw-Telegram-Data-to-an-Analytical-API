@@ -54,7 +54,7 @@ jobs:
       - name: Setup Raw Schema and dbt Build
         run: |
           # Create the schema that dbt sources expect
-          PGPASSWORD=password psql -h localhost -U postgres -d medical_warehouse -c "CREATE SCHEMA IF NOT EXISTS raw;"
+          PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE SCHEMA IF NOT EXISTS raw;"
           
           dbt deps --project-dir medical_warehouse
           dbt build --project-dir medical_warehouse --profiles-dir medical_warehouse
