@@ -1,0 +1,71 @@
+name: dbt CI/CD Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  dbt-testing:
+    runs-on: ubuntu-latest
+    services:
+      # This spins up a real Postgres DB inside the GitHub runner
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: 12345678
+          POSTGRES_DB: medical_warehouse
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 6
+
+    env:
+      DB_HOST: localhost  # Now 'localhost' works because the DB is in the runner!
+      DB_USER: postgres
+      DB_PASS: 12345678
+      DB_NAME: medical_warehouse
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install dbt-postgres
+    #if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Install dbt packages
+        run: dbt deps --project-dir medical_warehouse
+
+      - name: Validate dbt connection
+        run: dbt debug --project-dir medical_warehouse --profiles-dir medical_warehouse
+
+      - name: Setup Raw Schema and dbt Build
+        run: |
+          # Create the schema and required tables
+          PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE SCHEMA IF NOT EXISTS raw;"
+          PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE TABLE IF NOT EXISTS raw.telegram_messages (message_id integer primary key, channel_name text, message_date timestamp, message_text text, message_length int, has_media text, has_image text, image_path text, views int , forwards int, loaded_at timestamp);"
+          PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE TABLE IF NOT EXISTS raw.yolo_detections (message_id BIGINT,
+            channel_name VARCHAR(255),
+            image_path TEXT,
+            detected_class VARCHAR(100),
+            confidence_score FLOAT,
+            image_category VARCHAR(50),
+            all_detections TEXT);"
+
+          dbt deps --project-dir medical_warehouse
+          dbt build --project-dir medical_warehouse --profiles-dir medical_warehouse
+
+      - name: Run dbt Tests
+        run: dbt test --project-dir medical_warehouse --profiles-dir medical_warehouse
