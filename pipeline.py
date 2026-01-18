@@ -140,7 +140,8 @@ def run_dbt_transformations(context: OpExecutionContext, loading_result: str) ->
 def run_yolo_enrichment(context: OpExecutionContext, dbt_result: str) -> str:
     context.log.info("TASK 3: Running YOLO Object Detection")
     try:
-        image_dir = Path('data/raw/images')
+        BASE_DIR = Path(__file__).resolve().parent
+        image_dir = BASE_DIR / 'data/raw/images'
         images = list(image_dir.rglob('*.jpg'))
         
         if not images:

@@ -16,6 +16,27 @@ You will:
 - Containerize Postgres, the API, and dbt with Docker Compose. 
 ***
 
+## 🚀 Production-Grade Features
+
+To meet industry standards for data reliability and maintainability, this project implements:
+
+- **Idempotent Pipelines:** Loaders use `UPSERT` (ON CONFLICT) logic to prevent data duplication and allow for safe re-runs.
+- **Incremental Processing:** YOLO detection tracks state to avoid re-processing images, saving significant compute costs.
+- **Systematic Error Handling:** - **Scraper:** Implements exponential backoff for Telegram FloodWait errors.
+    - **Database:** Transactional integrity with batch inserts and automated rollbacks on failure.
+    - **Orchestration:** Integrated Dagster health checks and pipeline verification ops.
+- **Data Quality Gates:** dbt "Source Freshness" tests and custom schema assertions (e.g., non-negative views, no future dates).
+
+## 🤝 Development & PR Workflow
+
+This project adheres to a professional **Pull Request (PR) based workflow**:
+1. **Branching Strategy:** Main branch protection is simulated. All features are developed in `feature/` or `fix/` branches.
+2. **CI/CD Integration:** Every Pull Request triggers a GitHub Action (`unittests.yml`) that:
+    - Lints Python code for PEP8 compliance.
+    - Runs unit tests for core logic (scrapers/detectors).
+    - Builds a temporary Postgres environment to validate dbt models and run data quality tests.
+3. **Automated Verification:** Merges to `main` are blocked if dbt tests or Python unit tests fail, ensuring the FastAPI production endpoint always serves verified data.
+
 ## Repository Structure
 
 ```text
@@ -33,20 +54,27 @@ medical-telegram-warehouse/
 ├── README.md
 ├── data/
 │   └── raw/
-│       ├── telegram_messages/YYYY-MM-DD/channel_name.json
-│       └── images/{channel_name}/{message_id}.jpg
+│       ├── telegram_messages
+│       └── images
+│   └── processed/
 ├── medical_warehouse/    # dbt project
 │   ├── dbt_project.yml
 │   ├── profiles.yml
+│   ├── Dbt_packages/
+│   ├── logs/
+│   ├── target/
 │   ├── models/
 │   │   ├── staging/
+│   │       ├── sources.yml
 │   │   │   └── stg_telegram_messages.sql
 │   │   └── marts/
+│   │       ├── schema.yml
 │   │       ├── dim_dates.sql
 │   │       ├── dim_channels.sql
 │   │       ├── fct_messages.sql
 │   │       └── fct_image_detections.sql
 │   └── tests/
+│       ├── assert_positive_views.sql
 │       └── assert_no_future_messages.sql
 ├── src/
 │   ├── scraper.py                # Task 1: Telegram scraping + data lake
@@ -59,10 +87,11 @@ medical-telegram-warehouse/
 │   ├── database.py       # SQLAlchemy engine/session
 │   └── schemas.py        # Pydantic models
 ├── notebooks/
-├── tests/
 │   └── __init__.py
-└── scripts/
-    └── pipeline.py        # Task 5: Dagster job
+├── tests/
+│   ├── __init__.py
+│   └── tests_scrapper.py      
+└── pipeline.py        # Task 5: Dagster job
 ```
 
 This layout follows the challenge guideline and separates scraping, transformation, enrichment, API, and orchestration components.
