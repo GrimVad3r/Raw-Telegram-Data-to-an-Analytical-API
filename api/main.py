@@ -25,27 +25,57 @@ def get_top_products(
     Uses simple word frequency analysis on message text.
     """
     query = text("""
-        WITH words AS (
-            SELECT 
-                LOWER(unnest(string_to_array(message_text, ' '))) AS word
-            FROM raw_marts.fct_messages
-            WHERE message_text IS NOT NULL AND message_text != ''
-        ),
-        word_counts AS (
-            SELECT 
-                word,
-                COUNT(*) AS count
-            FROM words
-            WHERE LENGTH(word) > 3  -- Filter out short words
-            GROUP BY word
-            ORDER BY count DESC
-            LIMIT :limit
-        )
-        SELECT 
-            word AS product_term,
-            count AS mention_count
-        FROM word_counts
-    """)
+                 WITH words AS (
+    SELECT 
+        -- 1. Improved regex: split by spaces AND punctuation/slashes, 
+        -- then remove anything not a letter to prevent "tubeheparine" clusters.
+        LOWER(regexp_replace(
+            unnest(regexp_split_to_array(message_text, '[\s\/\-\,\.\(\)]+')), 
+            '[^a-z]', '', 'g'
+        )) AS word
+    FROM raw_marts.fct_messages
+    WHERE message_text IS NOT NULL AND message_text != ''
+),
+filtered_counts AS (
+    SELECT 
+        word,
+        COUNT(*) AS count
+    FROM words
+    WHERE LENGTH(word) > 3  -- Shortened slightly to catch 'zinc' or 'gel'
+      -- 2. EXCLUDE "False Positives" (Words that match suffixes but aren't pharma)
+      AND word NOT IN (
+          'birr', 'delivery', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
+          'available', 'price', 'fixed', 'address', 'phone', 'location', 'station', 'around', 'front',
+          'school', 'plaza', 'mall', 'bole', 'medhanialem', 'cmc', 'ayat', 'gerji', 'legetafo',
+          -- NEW: Negative filter for common suffix matches
+          'machine', 'furniture', 'urine', 'uterine', 'online', 'outline', 'deadline', 'headline', 
+          'timeline', 'routine', 'magazine', 'gasoline', 'engine', 'alcohol', 'school', 'control',
+          'please', 'message', 'thanks', 'contact', 'stock', 'store', 'inbox'
+      )
+      -- 3. ENHANCED INCLUDE patterns
+      AND (
+          word LIKE '%ine' OR   -- e.g., Caffeine, Insulin
+          word LIKE '%ol' OR    -- e.g., Retinol, Paracetamol, Menthol
+          word LIKE '%acid' OR  -- e.g., Hyaluronic
+          word LIKE '%derm%' OR -- e.g., Bioderma
+          word LIKE '%vit%' OR  -- e.g., Vitamin
+          word LIKE '%cream%' OR
+          word LIKE '%serum%' OR
+          word LIKE '%gel' OR   -- Added for cosmetics
+          word LIKE '%caine' OR -- Added for numbing/pharma (Lidocaine)
+          word LIKE '%sone' OR  -- Added for steroids (Dexamethasone)
+          word LIKE '%zole'     -- Added for antifungals (Ketoconazole)
+      )
+    GROUP BY word
+)
+SELECT 
+    word AS product_term,
+    count AS mention_count
+FROM filtered_counts
+WHERE word != '' -- Final safety check
+ORDER BY count DESC
+LIMIT :limit
+                 """)
     
     result = db.execute(query, {"limit": limit})
     return [{"product_term": row[0], "mention_count": row[1]} for row in result]
