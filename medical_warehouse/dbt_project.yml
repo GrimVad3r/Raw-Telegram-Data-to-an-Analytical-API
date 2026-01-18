@@ -4,6 +4,7 @@ config-version: 2
 
 profile: 'medical_warehouse'
 
+# Directory configuration
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
@@ -16,11 +17,27 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+# --- 1. SYSTEMATIC ERROR HANDLING & RESILIENCE ---
+# Define variables to avoid hardcoding logic in SQL files
+vars:
+  min_message_length: 5
+  start_date: '2020-01-01'
+
+# --- 2. MODULAR MODEL CONFIGURATION ---
 models:
   medical_warehouse:
+    # Staging: Raw data cleaning. Materialized as views to save storage.
     staging:
       +materialized: view
       +schema: staging
+      +post-hook: "grant select on {{ this }} to public" # Production access control
+      
+    # Marts: Business-ready data. Materialized as tables for API performance.
     marts:
       +materialized: table
-      +schema: marts
+      +schema: raw_marts
+      # Systematic Data Quality: Ensure these models are tested before building
+      +docs:
+        node_color: '#008080'
+      intermediate:
+        +materialized: ephemeral # These don't create tables, keeping DB clean

@@ -1,79 +1,102 @@
 import json
 import psycopg2
+from psycopg2.extras import execute_values
 from pathlib import Path
 from dotenv import load_dotenv
 import os
 import logging
 
+# --- 1. PRODUCTION LOGGING ---
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger("RawDataLoader")
+
 load_dotenv()
-logger = logging.getLogger(__name__)
 
 class RawDataLoader:
     def __init__(self):
-        self.conn = psycopg2.connect(
-            host=os.getenv('DB_HOST', 'localhost'),
-            database=os.getenv('DB_NAME', 'medical_warehouse'),
-            user=os.getenv('DB_USER', 'postgres'),
-            password=os.getenv('DB_PASS')
+        self.db_url = os.getenv('DATABASE_URL') or (
+            f"host={os.getenv('DB_HOST', 'localhost')} "
+            f"dbname={os.getenv('DB_NAME', 'medical_warehouse')} "
+            f"user={os.getenv('DB_USER', 'postgres')} "
+            f"password={os.getenv('DB_PASS')}"
         )
-        self.cur = self.conn.cursor()
-    
-    def create_raw_schema(self):
-        """Create raw schema and table"""
-        self.cur.execute("""
-            CREATE SCHEMA IF NOT EXISTS raw;
-            
-            DROP TABLE IF EXISTS raw.telegram_messages CASCADE;
-            
-            CREATE TABLE raw.telegram_messages (
-                message_id BIGINT,
-                channel_name VARCHAR(255),
-                message_date TIMESTAMP,
-                message_text TEXT,
-                has_media BOOLEAN,
-                image_path TEXT,
-                views INTEGER,
-                forwards INTEGER,
-                loaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-        """)
-        self.conn.commit()
-        logger.info("Created raw schema and table")
-    
+
+    def init_database(self):
+        """Prepares the schema without destructive CASCADE drops."""
+        with psycopg2.connect(self.db_url) as conn:
+            with conn.cursor() as cur:
+                cur.execute("CREATE SCHEMA IF NOT EXISTS raw;")
+                
+                # Systematic Error Handling: Use Unique Constraint for Upsert logic
+                cur.execute("""
+                    CREATE TABLE IF NOT EXISTS raw.telegram_messages (
+                        message_id BIGINT,
+                        channel_name VARCHAR(255),
+                        message_date TIMESTAMP,
+                        message_text TEXT,
+                        has_media BOOLEAN,
+                        image_path TEXT,
+                        views INTEGER,
+                        forwards INTEGER,
+                        loaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        PRIMARY KEY (message_id, channel_name)
+                    );
+                """)
+                conn.commit()
+        logger.info("Database schema initialized and ready for Upsert.")
+
     def load_json_files(self, data_dir='data/raw/telegram_messages'):
-        """Load all JSON files from data lake"""
+        """Loads JSON data using an Upsert strategy for production resilience."""
         json_files = list(Path(data_dir).rglob('*.json'))
         
-        for json_file in json_files:
-            with open(json_file, 'r', encoding='utf-8') as f:
-                messages = json.load(f)
-            
-            for message in messages:
-                self.cur.execute("""
-                    INSERT INTO raw.telegram_messages 
-                    (message_id, channel_name, message_date, message_text, 
-                     has_media, image_path, views, forwards)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                """, (
-                    message['message_id'],
-                    message['channel_name'],
-                    message['message_date'],
-                    message['message_text'],
-                    message['has_media'],
-                    message['image_path'],
-                    message['views'],
-                    message['forwards']
-                ))
-            
-            self.conn.commit()
-            logger.info(f"Loaded {len(messages)} messages from {json_file}")
-    
-    def close(self):
-        self.cur.close()
-        self.conn.close()
+        if not json_files:
+            logger.warning(f"No JSON files found in {data_dir}")
+            return
+
+        with psycopg2.connect(self.db_url) as conn:
+            with conn.cursor() as cur:
+                for json_file in json_files:
+                    try:
+                        with open(json_file, 'r', encoding='utf-8') as f:
+                            messages = json.load(f)
+                        
+                        if not messages:
+                            continue
+
+                        # Prepare data for batch insert
+                        data_to_insert = [
+                            (
+                                m['message_id'], m['channel_name'], m['message_date'],
+                                m['message_text'], m['has_media'], m['image_path'],
+                                m['views'], m['forwards']
+                            ) for m in messages
+                        ]
+
+                        # 2. SYSTEMATIC UPSERT: Update views/forwards if record exists
+                        insert_query = """
+                            INSERT INTO raw.telegram_messages 
+                            (message_id, channel_name, message_date, message_text, 
+                             has_media, image_path, views, forwards)
+                            VALUES %s
+                            ON CONFLICT (message_id, channel_name) DO UPDATE SET
+                                views = EXCLUDED.views,
+                                forwards = EXCLUDED.forwards,
+                                loaded_at = CURRENT_TIMESTAMP;
+                        """
+                        
+                        execute_values(cur, insert_query, data_to_insert)
+                        logger.info(f"Loaded/Updated {len(messages)} messages from {json_file.name}")
+                        
+                    except Exception as e:
+                        logger.error(f"Failed to load {json_file}: {e}")
+                        conn.rollback() # Rollback current file, move to next
+                
+                conn.commit()
 
 if __name__ == '__main__':
     loader = RawDataLoader()
-    loader.create_raw_schema()
+    loader.init_database()
     loader.load_json_files()
-    loader.close()

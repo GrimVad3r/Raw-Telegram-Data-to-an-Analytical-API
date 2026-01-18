@@ -1,4 +1,4 @@
-name: dbt CI/CD Tests
+name: Production Data Pipeline CI/CD
 
 on:
   push:
@@ -7,14 +7,34 @@ on:
     branches: [ main, master ]
 
 jobs:
-  dbt-testing:
+  quality-gate:
+    name: Python Linting & Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      - name: Install Linting Tools
+        run: pip install flake8 pytest pytest-mock
+        
+      - name: Lint Code (Systematic Error Prevention)
+        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Run Python Unit Tests
+        run: pytest tests/python_tests/  # We will create this below
+
+  dbt-integration-testing:
+    name: dbt Warehouse Validation
+    needs: quality-gate # Fail-fast: Don't waste DB resources if Python code is broken
     runs-on: ubuntu-latest
     services:
-      # This spins up a real Postgres DB inside the GitHub runner
       postgres:
         image: postgres:14
         env:
-          POSTGRES_PASSWORD: 12345678
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASS }}
           POSTGRES_DB: medical_warehouse
         ports:
           - 5432:5432
@@ -25,47 +45,28 @@ jobs:
           --health-retries 6
 
     env:
-      DB_HOST: localhost  # Now 'localhost' works because the DB is in the runner!
+      DB_HOST: localhost
       DB_USER: postgres
-      DB_PASS: 12345678
+      DB_PASS: ${{ secrets.DB_PASS }}
       DB_NAME: medical_warehouse
+      DB_PASSWORD: ${{ secrets.DB_PASS }} # For dbt profiles.yml
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
+      - name: Install dbt & Dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install dbt-postgres
-    #if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Install dbt packages
-        run: dbt deps --project-dir medical_warehouse
-
-      - name: Validate dbt connection
-        run: dbt debug --project-dir medical_warehouse --profiles-dir medical_warehouse
-
-      - name: Setup Raw Schema and dbt Build
-        run: |
-          # Create the schema and required tables
-          PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE SCHEMA IF NOT EXISTS raw;"
-          PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE TABLE IF NOT EXISTS raw.telegram_messages (message_id integer primary key, channel_name text, message_date timestamp, message_text text, message_length int, has_media text, has_image text, image_path text, views int , forwards int, loaded_at timestamp);"
-          PGPASSWORD=12345678 psql -h localhost -U postgres -d medical_warehouse -c "CREATE TABLE IF NOT EXISTS raw.yolo_detections (message_id BIGINT,
-            channel_name VARCHAR(255),
-            image_path TEXT,
-            detected_class VARCHAR(100),
-            confidence_score FLOAT,
-            image_category VARCHAR(50),
-            all_detections TEXT);"
-
+          # Install any custom utils used in dbt models
           dbt deps --project-dir medical_warehouse
-          dbt build --project-dir medical_warehouse --profiles-dir medical_warehouse
 
-      - name: Run dbt Tests
+      - name: Initialize Warehouse Schema
+        run: |
+          # Use a dedicated script for setup to keep YAML clean
+          python src/load_raw_to_postgres.py --init-only 
+
+      - name: dbt Build (Runs models + seeds + snapshots)
+        run: dbt build --project-dir medical_warehouse --profiles-dir medical_warehouse --target dev
+
+      - name: Run dbt Tests (Custom & Schema Tests)
         run: dbt test --project-dir medical_warehouse --profiles-dir medical_warehouse

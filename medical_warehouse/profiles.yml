@@ -1,12 +1,25 @@
 medical_warehouse:
-  outputs:
-    dev:
-      dbname: medical_warehouse
-      host: localhost
-      pass: '12345678'
-      port: 5432
-      schema: raw
-      threads: 1
-      type: postgres
-      user: postgres
   target: dev
+  outputs:
+    # --- DEVELOPMENT (Local) ---
+    dev:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: postgres
+      # SECURE: Pulls password from environment variables to keep it out of GitHub history
+      pass: "{{ env_var('DB_PASS') }}" 
+      dbname: medical_warehouse
+      schema: dev_staging # Separate schema from 'raw' to protect source data
+      threads: 4 # PERFORMANCE: Allows dbt to run models in parallel
+
+    # --- PRODUCTION (Used in Dagster/GitHub Actions) ---
+    prod:
+      type: postgres
+      host: "{{ env_var('DB_HOST') }}"
+      port: "{{ env_var('DB_PORT', 5432) }}"
+      user: "{{ env_var('DB_USER') }}"
+      pass: "{{ env_var('DB_PASS') }}"
+      dbname: medical_warehouse
+      schema: main
+      threads: 8 # RESILIENCE: Higher concurrency for heavy production workloads

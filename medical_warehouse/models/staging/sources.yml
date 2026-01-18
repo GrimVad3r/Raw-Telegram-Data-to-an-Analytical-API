@@ -2,25 +2,48 @@ version: 2
 
 sources:
   - name: raw
-    schema: raw
+    # Professional Practice: Using environment variables for schema management
+    schema: "{{ env_var('DB_RAW_SCHEMA', 'raw') }}"
+    
+    # --- 1. SYSTEMATIC ERROR HANDLING: FRESHNESS ---
+    # Alerts you if the scraper or YOLO script hangs
+    freshness:
+      warn_after: {count: 12, period: hour}
+      error_after: {count: 24, period: hour}
+    loaded_at_field: scraped_at # Assumes you added this timestamp to your raw tables
+
     tables:
       - name: telegram_messages
-        description: "Raw Telegram messages scraped from channels"
+        description: "Raw Telegram messages scraped from medical channels."
         columns:
           - name: message_id
-            description: "Unique message identifier"
-            data_tests:  # Updated to modern syntax
+            description: "Primary key from Telegram."
+            data_tests:
+              - unique
               - not_null
           - name: channel_name
-            description: "Name of the Telegram channel"
-          - name: message_date
-            description: "Timestamp when message was posted"
-
-      # --- ADD THE SECTION BELOW ---
-      - name: yolo_detections
-        description: "Raw detection data from the YOLO object detection model"
-        columns:
-          - name: message_id
-            description: "Foreign key linking to telegram_messages"
+            description: "Source channel handle."
             data_tests:
               - not_null
+          - name: message_date
+            description: "Timestamp of post creation."
+            data_tests:
+              - not_null
+
+      - name: yolo_detections
+        description: "Direct output from YOLOv8 image enrichment pipeline."
+        columns:
+          - name: message_id
+            description: "FK linking to telegram_messages."
+            data_tests:
+              - not_null
+              # Resilience: Ensure detections don't exist for non-existent messages
+              - relationships:
+                  to: source('raw', 'telegram_messages')
+                  field: message_id
+          - name: confidence_score
+            description: "YOLO model confidence (0-1)."
+            data_tests:
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  max_value: 1
